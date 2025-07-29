@@ -1,2 +1,2 @@
 FROM dunglas/mercure
-CMD ["./mercure", "--jwt-key='your-secret-key'", "--addr=':80'", "--allow-anonymous"]
+CMD ["./mercure", "--jwt-key='secret-key'", "--addr=':8080'", "--allow-anonymous"]

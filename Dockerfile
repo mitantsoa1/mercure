@@ -1,11 +1,5 @@
 FROM dunglas/mercure
 
-ENV SERVER_NAME=":80, :443"
-
-# Les variables suivantes doivent être injectées dynamiquement à l’exécution (via .env ou Render)
-# Ne pas définir les clés JWT dans le Dockerfile pour des raisons de sécurité.
-
-# Ajout des directives supplémentaires
 ENV MERCURE_EXTRA_DIRECTIVES="\
     cors_origins *\n\
     cors_allowed_headers \"Content-Type,Authorization\"\n\
@@ -15,5 +9,16 @@ ENV MERCURE_EXTRA_DIRECTIVES="\
     publish_origins *\n\
     demo\
     "
+
+# Copie le template et le script d’entrée
+COPY Caddyfile.template /etc/caddy/Caddyfile.template
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+# Définir les variables par défaut (Render remplacera avec ses propres valeurs)
+ENV SERVER_NAME=":80, :443"
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]

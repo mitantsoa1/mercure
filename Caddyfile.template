@@ -1,0 +1,19 @@
+:80 {
+    mercure {
+        publish_key "${MERCURE_PUBLISHER_JWT_KEY}"
+        subscribe_key "${MERCURE_SUBSCRIBER_JWT_KEY}"
+
+        cors_origins "*"
+        cors_allowed_headers "Content-Type,Authorization"
+        cors_exposed_headers "Link"
+        cors_credentials "on"
+        anonymous
+        publish_origins "*"
+        demo
+    }
+
+    log {
+        output stdout
+        level DEBUG
+    }
+}

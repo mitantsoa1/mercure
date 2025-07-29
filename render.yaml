@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: mercure
-    image: dunglas/mercure
-    port: 8080
+    name: mercure-hub
+    env: docker
+    plan: free
     envVars:
-      - key: JWT_KEY
-        value: secret-key
       - key: MERCURE_PUBLISHER_JWT_KEY
-        value: secret-key
+        value: "!myPublisherSecret!"
+      - key: MERCURE_SUBSCRIBER_JWT_KEY
+        value: "!mySubscriberSecret!"

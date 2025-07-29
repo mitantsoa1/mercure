@@ -1,13 +1,19 @@
 FROM dunglas/mercure
 
-# Définir la clé JWT directement ici (à éviter en production !)
+ENV SERVER_NAME=":80, :443"
 
-# Origines autorisées pour publier/souscrire
-ENV MERCURE_PUBLISH_ALLOWED_ORIGINS="*"
-ENV MERCURE_SUBSCRIBE_ALLOWED_ORIGINS="*"
-ENV MERCURE_CORS_ALLOWED_ORIGINS="*"
+# Les variables suivantes doivent être injectées dynamiquement à l’exécution (via .env ou Render)
+# Ne pas définir les clés JWT dans le Dockerfile pour des raisons de sécurité.
 
-# Optionnel : tu peux désactiver l'HTTPS forcé (utile pour Render en HTTP derrière HTTPS)
-ENV SERVER_NAME=":"
+# Ajout des directives supplémentaires
+ENV MERCURE_EXTRA_DIRECTIVES="\
+    cors_origins *\n\
+    cors_allowed_headers \"Content-Type,Authorization\"\n\
+    cors_exposed_headers \"Link\"\n\
+    cors_credentials on\n\
+    anonymous\n\
+    publish_origins *\n\
+    demo\
+    "
 
-CMD ["caddy", "run","--jwt-key=${MERCURE_PUBLISHER_JWT_KEY}", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile","--cors-allowed-origins=*"]
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]

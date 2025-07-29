@@ -1,14 +1,14 @@
-# Utilise l'image officielle Mercure
 FROM dunglas/mercure
 
-# Définir les variables d'environnement dynamiques par défaut
-# Render assigne le port via la variable $PORT
-ENV SERVER_NAME=: \
-    MERCURE_PUBLISH_ALLOWED_ORIGINS=* \
-    MERCURE_SUBSCRIBE_ALLOWED_ORIGINS=* \
-    MERCURE_JWT_SECRET=YourJWTSecretHere \
-    MERCURE_CORS_ALLOWED_ORIGINS=* \
-    MERCURE_EXTRA_DIRECTIVES=""
+# Définir la clé JWT directement ici (à éviter en production !)
+ENV MERCURE_JWT_SECRET="!ChangeMe!"
 
-# On redéfinit la commande d’entrée pour utiliser le port Render
+# Origines autorisées pour publier/souscrire
+ENV MERCURE_PUBLISH_ALLOWED_ORIGINS="*"
+ENV MERCURE_SUBSCRIBE_ALLOWED_ORIGINS="*"
+ENV MERCURE_CORS_ALLOWED_ORIGINS="*"
+
+# Optionnel : tu peux désactiver l'HTTPS forcé (utile pour Render en HTTP derrière HTTPS)
+ENV SERVER_NAME=":"
+
 CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]

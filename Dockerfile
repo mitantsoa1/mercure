@@ -1,5 +1,8 @@
 FROM dunglas/mercure
 
+# Installer envsubst (inclus dans gettext)
+RUN apk add --no-cache gettext
+
 ENV MERCURE_EXTRA_DIRECTIVES="\
     cors_origins *\n\
     cors_allowed_headers \"Content-Type,Authorization\"\n\

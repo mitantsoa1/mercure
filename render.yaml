@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: mercure
+    env: docker
+    plan: free
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SERVER_NAME
+        value: mercure-3bze.onrender.com
+      - key: MERCURE_PUBLISHER_JWT_KEY
+        value: !ChangeThisMercureHubJWTSecretKey!
+      - key: MERCURE_SUBSCRIBER_JWT_KEY
+        value: !ChangeThisMercureHubJWTSecretKey!
+      - key: MERCURE_CORS_ALLOWED_ORIGINS
+        value: "*"

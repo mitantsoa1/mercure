@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: mercure
+    image: dunglas/mercure
+    port: 8080
+    envVars:
+      - key: JWT_KEY
+        value: secret-key
+      - key: MERCURE_PUBLISHER_JWT_KEY
+        value: secret-key
